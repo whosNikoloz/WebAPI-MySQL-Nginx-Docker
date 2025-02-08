@@ -1,0 +1,129 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\User\\source\\repos\\DockerSSLWebAPI\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5F417A93-C394-465F-8F1B-058B0A124744}|DockerSSLWebAPI\\DockerSSLWebAPI.csproj|c:\\users\\user\\source\\repos\\dockersslwebapi\\dockersslwebapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F417A93-C394-465F-8F1B-058B0A124744}|DockerSSLWebAPI\\DockerSSLWebAPI.csproj|solutionrelative:dockersslwebapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F417A93-C394-465F-8F1B-058B0A124744}|DockerSSLWebAPI\\DockerSSLWebAPI.csproj|c:\\users\\user\\source\\repos\\dockersslwebapi\\dockersslwebapi\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F417A93-C394-465F-8F1B-058B0A124744}|DockerSSLWebAPI\\DockerSSLWebAPI.csproj|solutionrelative:dockersslwebapi\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F417A93-C394-465F-8F1B-058B0A124744}|DockerSSLWebAPI\\DockerSSLWebAPI.csproj|c:\\users\\user\\source\\repos\\dockersslwebapi\\dockersslwebapi\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F417A93-C394-465F-8F1B-058B0A124744}|DockerSSLWebAPI\\DockerSSLWebAPI.csproj|solutionrelative:dockersslwebapi\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F417A93-C394-465F-8F1B-058B0A124744}|DockerSSLWebAPI\\DockerSSLWebAPI.csproj|c:\\users\\user\\source\\repos\\dockersslwebapi\\dockersslwebapi\\migrations\\appdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F417A93-C394-465F-8F1B-058B0A124744}|DockerSSLWebAPI\\DockerSSLWebAPI.csproj|solutionrelative:dockersslwebapi\\migrations\\appdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F417A93-C394-465F-8F1B-058B0A124744}|DockerSSLWebAPI\\DockerSSLWebAPI.csproj|c:\\users\\user\\source\\repos\\dockersslwebapi\\dockersslwebapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{5F417A93-C394-465F-8F1B-058B0A124744}|DockerSSLWebAPI\\DockerSSLWebAPI.csproj|solutionrelative:dockersslwebapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F417A93-C394-465F-8F1B-058B0A124744}|DockerSSLWebAPI\\DockerSSLWebAPI.csproj|c:\\users\\user\\source\\repos\\dockersslwebapi\\dockersslwebapi\\migrations\\20250206144640_init.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F417A93-C394-465F-8F1B-058B0A124744}|DockerSSLWebAPI\\DockerSSLWebAPI.csproj|solutionrelative:dockersslwebapi\\migrations\\20250206144640_init.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 189,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:2029881168:0:{83107a3e-496a-485e-b455-16ddb978e55e}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AppDbContextModelSnapshot.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\DockerSSLWebAPI\\DockerSSLWebAPI\\Migrations\\AppDbContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "DockerSSLWebAPI\\Migrations\\AppDbContextModelSnapshot.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\DockerSSLWebAPI\\DockerSSLWebAPI\\Migrations\\AppDbContextModelSnapshot.cs",
+              "RelativeToolTip": "DockerSSLWebAPI\\Migrations\\AppDbContextModelSnapshot.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABgAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T06:17:13.301Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\DockerSSLWebAPI\\DockerSSLWebAPI\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "DockerSSLWebAPI\\Data\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\DockerSSLWebAPI\\DockerSSLWebAPI\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "DockerSSLWebAPI\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T06:17:08.517Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\DockerSSLWebAPI\\DockerSSLWebAPI\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "DockerSSLWebAPI\\Controllers\\UsersController.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\DockerSSLWebAPI\\DockerSSLWebAPI\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "DockerSSLWebAPI\\Controllers\\UsersController.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAA1wB0AAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-06T14:45:15.399Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\DockerSSLWebAPI\\DockerSSLWebAPI\\appsettings.json",
+              "RelativeDocumentMoniker": "DockerSSLWebAPI\\appsettings.json",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\DockerSSLWebAPI\\DockerSSLWebAPI\\appsettings.json",
+              "RelativeToolTip": "DockerSSLWebAPI\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-02-06T14:38:24.095Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\DockerSSLWebAPI\\DockerSSLWebAPI\\Program.cs",
+              "RelativeDocumentMoniker": "DockerSSLWebAPI\\Program.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\DockerSSLWebAPI\\DockerSSLWebAPI\\Program.cs",
+              "RelativeToolTip": "DockerSSLWebAPI\\Program.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAAACIAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-06T08:42:16.564Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "20250206144640_init.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\DockerSSLWebAPI\\DockerSSLWebAPI\\Migrations\\20250206144640_init.cs",
+              "RelativeDocumentMoniker": "DockerSSLWebAPI\\Migrations\\20250206144640_init.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\DockerSSLWebAPI\\DockerSSLWebAPI\\Migrations\\20250206144640_init.cs",
+              "RelativeToolTip": "DockerSSLWebAPI\\Migrations\\20250206144640_init.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T06:17:36.005Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

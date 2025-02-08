@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "UxbNkmGG4ktSFfUc+XIruNiiV6sCGZfwcT3+j160e1E=",
+  "Source": "DockerSSLWebAPI",
+  "BasePath": "_content/DockerSSLWebAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
