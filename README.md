@@ -258,3 +258,5 @@ Access the API at:
 ```text
 https://yourdomain.com/swagger
 ```
+https://www.notion.so/Deploying-an-ASP-NET-Web-API-with-MySQL-Nginx-and-Docker-194661c42c9580eeb372f9599c7c0ea0?pvs=4
+
