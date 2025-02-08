@@ -524,19 +524,17 @@ http {
 }
 
 ```
+
 To start the containers, I ran:
 
-```
+```powershell
 docker-compose up -d
-
 ```
 
 Now, users can access the API using:
 
-```
+```html
 http://mmydomain/swagger
-
 ```
 
-This setup allows a fully containerized ASP.NET Web API with **MySQL and Nginx reverse proxy** accessible from external devices.
-
+This setup allows a fully containerized [ASP.NET](http://asp.net/) Web API with **MySQL and Nginx reverse proxy** accessible from external devices.
