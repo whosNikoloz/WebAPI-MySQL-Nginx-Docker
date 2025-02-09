@@ -322,8 +322,6 @@ This setup allows a fully containerized ASP.NET Web API with **MySQL and Nginx r
 modify this and add the certbot 
 
 ```yaml
-version: "3.8"
-
 services:
   db:
     image: mysql:latest
@@ -339,7 +337,7 @@ services:
     networks:
       - app_network
     healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h localhost -usa -pP@SS || exit 1"]
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u sa -pP@SS || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 15
@@ -364,13 +362,14 @@ services:
   nginx:
     image: nginx:latest
     container_name: nginx_container
-    restart: unless-stopped
+    restart: always
     depends_on:
-      - webapi
+      certbot:
+        condition: service_completed_successfully
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - certbot_etc:/etc/letsencrypt # Mount Certbot SSL Certificates
-      - certbot_www:/var/www/certbot # ACME Challenge folder
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
     networks:
       - app_network
     ports:
@@ -380,14 +379,18 @@ services:
   certbot:
     image: certbot/certbot:latest
     container_name: certbot
-    restart: unless-stopped
     volumes:
-      - certbot_etc:/etc/letsencrypt
-      - certbot_www:/var/www/certbot # ACME Challenge folder
-    depends_on:
-      - nginx
-    entrypoint: >
-      sh -c "certbot certonly --webroot -w /var/www/certbot -d yourdomain.com --email your@email.com --agree-tos --no-eff-email --force-renewal && certbot renew --dry-run"
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    entrypoint: sh -c "
+      mkdir -p /var/www/certbot &&
+      certbot certonly --webroot -w /var/www/certbot --email nika.kobaidze021@gmail.com -d nikusha.miomedica.ge --agree-tos --non-interactive --keep-until-expiring &&
+      if [ ! -f /etc/letsencrypt/options-ssl-nginx.conf ]; then
+      wget -O /etc/letsencrypt/options-ssl-nginx.conf https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/options-ssl-nginx.conf;
+      fi &&
+      if [ ! -f /etc/letsencrypt/ssl-dhparams.pem ]; then
+      openssl dhparam -out /etc/letsencrypt/ssl-dhparams.pem 2048;
+      fi"
 
 networks:
   app_network:
@@ -395,7 +398,7 @@ networks:
 volumes:
   mysql_data:
   certbot_etc:
-  certbot_var:
+  certbot_www:
 
 ```
 
@@ -403,115 +406,60 @@ volumes:
 
 add 
 
-```
-location /.well-known/acme-challenge/ {
-            root /var/www/certbot;
-        }
-```
-
 ```json
 events {
     worker_connections 1024;
 }
 
 http {
-    include       mime.types;
-    default_type  application/octet-stream;
-    sendfile        on;
-    keepalive_timeout  65;
-    gzip  on;
-    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+    include /etc/nginx/mime.types;
+
+    limit_req_zone $binary_remote_addr zone=mylimit:10m rate=10r/s;
+    limit_conn_zone $binary_remote_addr zone=conn_limit_per_ip:10m;
 
     server {
         listen 80;
-        server_name localhost;
+        server_name nikusha.miomedica.ge;
 
-        location / {
-            proxy_pass http://webapi:8080/;
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
-            proxy_set_header X-Forwarded-Host $host;
-            proxy_set_header X-Forwarded-Port $server_port;
-        }
-        
-        location /.well-known/acme-challenge/ {
-            root /var/www/certbot;
-        }
-
-        location /swagger/ {
-            proxy_pass http://webapi:8080/swagger/;
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
-            proxy_set_header X-Forwarded-Host $host;
-            proxy_set_header X-Forwarded-Port $server_port;
-        }
-    }
-}
-```
-
-after successful Registered SSL
-
-## 12. Last Step Adjust Ngnix To get the 443 Req
-
-```
-events {
-    worker_connections 1024;
-}
-
-http {
-    include       mime.types;
-    default_type  application/octet-stream;
-    sendfile        on;
-    keepalive_timeout  65;
-    gzip  on;
-    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
-
-    # Redirect HTTP to HTTPS
-    server {
-        listen 80;
-        server_name yourdomain.com;
-
-        # ACME Challenge for Certbot (Allows HTTP validation for SSL)
         location /.well-known/acme-challenge/ {
             root /var/www/certbot;
         }
 
         location / {
-            proxy_pass http://webapi:8080/;
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
+            return 301 https://$host$request_uri;
         }
-
-        return 301 https://$host$request_uri;
     }
 
     server {
         listen 443 ssl;
-        server_name yourdomain.com;
+        server_name nikusha.miomedica.ge;
 
-        ssl_certificate /etc/letsencrypt/live/yourdomain.com/fullchain.pem;
-        ssl_certificate_key /etc/letsencrypt/live/yourdomain.com/privkey.pem;
+        ssl_certificate /etc/letsencrypt/live/nikusha.miomedica.ge/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/nikusha.miomedica.ge/privkey.pem;
         include /etc/letsencrypt/options-ssl-nginx.conf;
         ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
+        # Security Headers
+        add_header X-Frame-Options DENY;
+        add_header X-Content-Type-Options nosniff;
+        add_header X-XSS-Protection "1; mode=block";
+        add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload";
+
+        # Web API Route
         location / {
-            proxy_pass http://webapi:8080/;
+            proxy_pass http://webapi:8080;
             proxy_set_header Host $host;
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
             proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_read_timeout 120s;
+            proxy_connect_timeout 120s;
+            proxy_send_timeout 120s;
+            limit_conn conn_limit_per_ip 10; # Optional rate limiting
+            limit_req zone=mylimit burst=20 nodelay; # Optional rate limiting
         }
 
-        location /.well-known/acme-challenge/ {
-            root /var/www/certbot;
-        }
-
+        # Swagger UI Route
         location /swagger/ {
             proxy_pass http://webapi:8080/swagger/;
             proxy_set_header Host $host;
@@ -520,12 +468,13 @@ http {
             proxy_set_header X-Forwarded-Proto $scheme;
         }
     }
-
 }
 
 ```
 
-To start the containers, I ran:
+after successful Registered SSL
+
+## To start the containers, I ran:
 
 ```powershell
 docker-compose up -d
@@ -538,3 +487,5 @@ http://mmydomain/swagger
 ```
 
 This setup allows a fully containerized [ASP.NET](http://asp.net/) Web API with **MySQL and Nginx reverse proxy** accessible from external devices.
+
+https://www.notion.so/Deploying-an-ASP-NET-Web-API-with-MySQL-Nginx-and-Docker-194661c42c9580eeb372f9599c7c0ea0?pvs=4
