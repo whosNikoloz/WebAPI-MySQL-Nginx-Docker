@@ -242,12 +242,6 @@ events {
 }
 
 http {
-    include       mime.types;
-    default_type  application/octet-stream;
-    sendfile        on;
-    keepalive_timeout  65;
-    gzip  on;
-    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
 
     server {
         listen 80;
@@ -364,8 +358,7 @@ services:
     container_name: nginx_container
     restart: always
     depends_on:
-      certbot:
-        condition: service_completed_successfully
+      - webapi
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./certbot/conf:/etc/letsencrypt
@@ -379,18 +372,31 @@ services:
   certbot:
     image: certbot/certbot:latest
     container_name: certbot
+    restart: "no"
+    depends_on:
+      nginx:
+        condition: service_started
     volumes:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
     entrypoint: sh -c "
-      mkdir -p /var/www/certbot &&
-      certbot certonly --webroot -w /var/www/certbot --email nika.kobaidze021@gmail.com -d nikusha.miomedica.ge --agree-tos --non-interactive --keep-until-expiring &&
+      sleep 15 &&
+      mkdir -p /var/www/certbot/.well-known/acme-challenge &&
+
+      certbot certonly --webroot -w /var/www/certbot --email nika.kobaidze021@gmail.com \
+      -d nikusha.miomedica.ge --agree-tos --non-interactive --keep-until-expiring &&
+
       if [ ! -f /etc/letsencrypt/options-ssl-nginx.conf ]; then
-      wget -O /etc/letsencrypt/options-ssl-nginx.conf https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/options-ssl-nginx.conf;
+      wget -O /etc/letsencrypt/options-ssl-nginx.conf https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/_internal/tls_configs/options-ssl-nginx.conf;
       fi &&
+
       if [ ! -f /etc/letsencrypt/ssl-dhparams.pem ]; then
       openssl dhparam -out /etc/letsencrypt/ssl-dhparams.pem 2048;
-      fi"
+      fi &&
+
+      cp /etc/letsencrypt/options-ssl-nginx.conf /var/www/certbot/options-ssl-nginx.conf &&
+      cp /etc/letsencrypt/ssl-dhparams.pem /var/www/certbot/ssl-dhparams.pem
+      "
 
 networks:
   app_network:
@@ -403,6 +409,48 @@ volumes:
 ```
 
 ## 11. Adjust Ngnix To Get SSL
+
+add 
+
+```json
+events {
+    worker_connections 1024;
+}
+
+http {
+    include /etc/nginx/mime.types;
+
+    server {
+        listen 80;
+        server_name _;
+
+        location /.well-known/acme-challenge/ {
+            root /var/www/certbot;
+        }
+
+        location / {
+            proxy_pass http://webapi:8080;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+
+        location /swagger{
+            proxy_pass http://webapi:8080/swagger;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+    }
+}
+
+```
+
+after successful Registered SSL
+
+## 13. Adjust Ngnix To Get SSL
 
 add 
 
@@ -439,13 +487,11 @@ http {
         include /etc/letsencrypt/options-ssl-nginx.conf;
         ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
-        # Security Headers
         add_header X-Frame-Options DENY;
         add_header X-Content-Type-Options nosniff;
         add_header X-XSS-Protection "1; mode=block";
         add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload";
 
-        # Web API Route
         location / {
             proxy_pass http://webapi:8080;
             proxy_set_header Host $host;
@@ -455,11 +501,10 @@ http {
             proxy_read_timeout 120s;
             proxy_connect_timeout 120s;
             proxy_send_timeout 120s;
-            limit_conn conn_limit_per_ip 10; # Optional rate limiting
-            limit_req zone=mylimit burst=20 nodelay; # Optional rate limiting
+            limit_conn conn_limit_per_ip 10;
+            limit_req zone=mylimit burst=20 nodelay; 
         }
 
-        # Swagger UI Route
         location /swagger/ {
             proxy_pass http://webapi:8080/swagger/;
             proxy_set_header Host $host;
